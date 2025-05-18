@@ -22,7 +22,7 @@ import { Seeder } from './seeders/seeder';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_NAME'),
         entities: [Employee, Role, EmployeeRole],
-        synchronize: false,
+        synchronize: true,
         logging: false,
       }),
       dataSourceFactory: async (options) => {
