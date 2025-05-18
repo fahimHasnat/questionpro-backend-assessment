@@ -1,47 +1,83 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# Description
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+This is a project done as an backend assessment for [QuestionPro](https://www.questionpro.com/)
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+### Functional Requirements
 
-## Description
+1. Develop an API that returns all the Employee Information under any given position in the organogram.
+2. Call another API (Can be another endpoint of your current api) with JWT token authorization.
+3. Create a nice Bootstrap UI to show the result.
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+### Non-functional Requirements
 
-## Project setup
+1. High Availability
+2. API can support 5000 calls at the same time.
+
+### Tech Stack
+
+**Backend**: NestJS
+
+**Database**: PostgreSQL
+
+**Auth**: JWT
+
+**Frontend**: Bootstrap, HTML, JS
+
+**Other**: Docker
+
+# Project setup
+
+## Connect Database
+
+For this project, I have opted to use Docker PostgreSQL image. First run your docker then in the bash:
+
+```bash
+docker run --name questionpro-pg-db \ 
+  -e POSTGRES_USER=admin\ 
+  -e POSTGRES_PASSWORD=supersecret \ 
+  -e POSTGRES_DB=questionpro \ 
+  -p 5432:5432 \
+  -d postgres
+```
+
+## Install dependencies
 
 ```bash
 $ npm install
 ```
 
+## Environment Variables
+
+Create a .env file in the root of the project and paste this:
+
+```bash
+NODE_ENV=development
+DB_HOST=localhost
+DB_PORT=5432
+DB_USERNAME=admin
+DB_PASSWORD=supersecret
+DB_NAME=questionpro
+DB_DIALECT=postgres
+PORT=8001
+
+JWT_SECRET=zaq1!QAZ
+```
+
+## Build and run the seeder
+
+```bash
+# build
+$ npm run build
+
+# seeder
+$ node dist/src/seeder.js
+```
+
 ## Compile and run the project
 
 ```bash
-# development
-$ npm run start
-
 # watch mode
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
 ## Run tests
@@ -52,47 +88,147 @@ $ npm run test
 
 # e2e tests
 $ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
 ```
+## Run the client
 
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+I have used nestJS to serve a static UI. For UI I have used basic HTML, Bootstrap CSS and Javascript. Go to your browser and type:
 
 ```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
+http://localhost:8001
 ```
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+### UI Preview
 
-## Resources
+![Organogram Viewer](https://github.com/user-attachments/assets/6dcacf37-0181-435e-9a64-049a36eb9105)
 
-Check out a few resources that may come in handy when working with NestJS:
+# Data Model
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+There are three tables in this project:
 
-## Support
+1. **employees** table contains employee information
+2. **roles** table table contains role information along with the role heirarchy
+3. **employee_roles** table contains relation between employee and role and this is a SCD Type 2 structure
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+![questionpro - public](https://github.com/user-attachments/assets/f5150b97-78c8-49e6-bff1-b070d91adf2d)
 
-## Stay in touch
+# API Design & Documentation
+There is only one API in the requirement: returns all the Employee Information under any given position. When client requests ```GET api/employee/:role_id```, the request goes to the nestJS backend server, the backend server then genrates a JWT secret with the role_id as payload and make a ```GET api/role``` request with ```Bearer Token``` and this request authorize the JWT token and returns the roles that are subordinates of the given role. 
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+![questionpro-api-design](https://github.com/user-attachments/assets/f11fc22d-8cc9-43cf-b383-eb228f6eed0e)
 
-## License
+Postman Documentation: https://fahimhasnat.postman.co/workspace/Fahim-Hasnat's-Workspace~4410836c-3590-44e6-8ccb-9631d42b546a/collection/45033274-678fff5a-671b-432f-8a8c-f6d4d6bb15c4?action=share&creator=45033274
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+# Logging
+
+For logging I have leveraged the power of nestJS inceptor decorator. 
+```js
+import {
+  Injectable,
+  NestInterceptor,
+  ExecutionContext,
+  CallHandler,
+} from '@nestjs/common';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
+@Injectable()
+export class LoggingInterceptor implements NestInterceptor {
+  intercept(context: ExecutionContext, next: CallHandler): Observable<any> {
+    const request = context.switchToHttp().getRequest();
+    const method = request.method;
+    const url = request.url;
+    const startTime = Date.now();
+
+    const logStart = {
+      event: 'request',
+      method,
+      url,
+      timestamp: new Date(startTime).toISOString(),
+    };
+    console.log(JSON.stringify(logStart));
+
+    return next.handle().pipe(
+      tap(() => {
+        const endTime = Date.now();
+        const logEnd = {
+          event: 'response',
+          method,
+          url,
+          executionTime: `${endTime - startTime}ms`,
+          timestamp: new Date(endTime).toISOString(),
+        };
+        console.log(JSON.stringify(logEnd));
+      }),
+    );
+  }
+}
+
+```
+Output:
+```
+{"event":"request","method":"GET","url":"/employee/f7361c70-cb16-4ded-935a-be55ba1e31ed","timestamp":"2025-05-18T12:28:23.632Z"}
+{"event":"request","method":"GET","url":"/role/subroles","timestamp":"2025-05-18T12:28:23.645Z"}
+{"event":"response","method":"GET","url":"/role/subroles","executionTime":"7ms","timestamp":"2025-05-18T12:28:23.652Z"}
+{"event":"response","method":"GET","url":"/employee/f7361c70-cb16-4ded-935a-be55ba1e31ed","executionTime":"34ms","timestamp":"2025-05-18T12:28:23.666Z"}
+{"event":"request","method":"GET","url":"/employee/f7361c70-cb16-4ded-935a-be55ba1e31ed","timestamp":"2025-05-18T13:37:01.553Z"}
+{"event":"request","method":"GET","url":"/role/subroles","timestamp":"2025-05-18T13:37:01.606Z"}
+```
+
+# Testing
+
+The project employs Jest for both unit and integration testing.
+
+```bash
+# unit tests
+$ npm run test
+
+# e2e tests
+$ npm run test:e2e
+```
+
+# Optimization
+
+## Database Optimization
+
+1. ***Materialized Views:*** Materialized views can be used to store the results of frequently executed queries, leading to faster data retrieval.
+2. ***Indexing:*** Proper indexing of database tables can significantly improve query performance.
+3. ***Partitioning:*** For very large tables, such as those storing data for a high number of employees, partitioning can improve query performance and manageability.
+4. ***Read Replicas:*** In read-heavy systems, employing multiple read replicas can distribute the read load and enhance performance.
+
+## Caching
+
+* Utilizing Redis allows data to be stored closer to the user, reducing latency.
+* A write-through Redis caching strategy ensures that both the cache and the database are updated simultaneously, maintaining data consistency.
+* Alternatively, an LRU (Least Recently Used) caching policy can be implemented to cache frequently accessed data.  However, this approach requires a data invalidation strategy to ensure the cache remains consistent with the database.
+
+## Load Balancing
+
+* Distributing incoming traffic across multiple server instances ensures that no single server is overwhelmed, improving responsiveness and availability.
+* Load balancing can be implemented using various algorithms, such as round-robin, least connections, or IP hashing, depending on the specific requirements of the application.
+* In addition to distributing traffic, load balancers can also perform health checks on servers and automatically remove unhealthy ones from the pool, further enhancing reliability.
+
+## Logging & Monitoring at Scale
+
+* ***Use a Dedicated Logging Service:*** Deploy a separate microservice and database specifically for handling logs, ensuring isolation from core application databases.
+* ***Implement Data Retention Policies:*** Configure the logging system to automatically purge old log data periodically, keeping storage usage optimized and manageable.
+* ***Enable Horizontal Scalability:*** Design the logging infrastructure to scale horizontally by adding nodes as log volume grows, maintaining performance under load.
+* ***Enforce Structured Logging:*** Standardize logs in a consistent, structured format (e.g., JSON). This enhances searchability, parsing, and integration with monitoring tools.
+* ***Adopt Asynchronous Logging:*** Log entries should be sent to a message queue (e.g., Kafka, RabbitMQ, or AWS Kinesis) before being processed. This enables throttling, prevents backpressure, and decouples log ingestion from application performance.
+* ***Partition Log and Metrics Storage:*** Distribute logs and metrics across multiple storage nodes or partitions to improve throughput, reliability, and fault tolerance.
+
+# Deployment
+
+* ***Cloud:*** AWS
+* ***Compute:*** EKS (Elastic Kubernetes Service) for running Dockerized NestJS containers
+* ***Database:*** Amazon RDS (PostgreSQL)
+* ***Container Registry:*** Amazon ECR
+
+Steps:
+1. Connect Amazon RDS
+2. Test
+3. Build Docker image
+4. Push to Amazon ECR
+5. Deploy via Helm
+
+
+
