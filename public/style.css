@@ -1,0 +1,68 @@
+.node {
+  border-left: 3px solid #129990;
+  margin: 20px 0;
+  padding: 15px 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.node > strong {
+  display: block;
+  font-size: 1.1rem;
+  color: #129990;
+  margin-bottom: 6px;
+}
+
+.employee-list {
+  margin-top: 10px;
+  padding-left: 15px;
+  border-left: 2px dashed #ced4da;
+}
+
+.employee-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 5px;
+  font-size: 0.95rem;
+  color: #343a40;
+}
+
+.employee-item::before {
+  content: '👤';
+  display: inline-block;
+}
+
+.node:hover {
+  background-color: #f8f9fa;
+  transition: background-color 0.3s ease;
+}
+
+.card-body {
+  font-family: 'Segoe UI', sans-serif;
+  color: #212529;
+}
+
+#roleSelect:focus {
+  outline: none;
+  border-color: #8dd8ff;
+  box-shadow: 0 0 5px rgba(102, 16, 242, 0.6);
+}
+
+#roleSelect {
+  color: #000000; /* text color */
+  background-color: #90d1ca; /* background */
+  border: 2px solid #129990;
+  border-radius: 6px;
+  padding: 8px 12px;
+  font-size: 1rem;
+  appearance: none; /* removes default arrow in some browsers */
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%230d6efd" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px 16px;
+  cursor: pointer;
+}
