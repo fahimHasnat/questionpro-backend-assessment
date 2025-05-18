@@ -1,4 +1,3 @@
-// test/role.e2e-spec.ts
 import { INestApplication, HttpStatus } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import * as request from 'supertest';
