@@ -32,18 +32,13 @@ This is a project done as an backend assessment for [QuestionPro](https://www.qu
 For this project, I have opted to use Docker PostgreSQL image. First run your docker then in the bash:
 
 ```bash
-docker run --name questionpro-pg-db \ 
-  -e POSTGRES_USER=admin\ 
-  -e POSTGRES_PASSWORD=supersecret \ 
-  -e POSTGRES_DB=questionpro \ 
-  -p 5432:5432 \
-  -d postgres
+docker run --name questionpro-pg-db -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=supersecret -e POSTGRES_DB=questionpro -p 5432:5432 -d postgres
 ```
 
 ## Install dependencies
 
 ```bash
-$ npm install
+npm install
 ```
 
 ## Environment Variables
@@ -67,28 +62,20 @@ JWT_SECRET=zaq1!QAZ
 
 ```bash
 # build
-$ npm run build
-
+npm run build
+```
+```bash
 # seeder
-$ node dist/src/seeder.js
+node dist/src/seeder.js
 ```
 
 ## Compile and run the project
 
 ```bash
 # watch mode
-$ npm run start:dev
+npm run start:dev
 ```
 
-## Run tests
-
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-```
 ## Run the client
 
 I have used nestJS to serve a static UI. For UI I have used basic HTML, Bootstrap CSS and Javascript. Go to your browser and type:
@@ -112,11 +99,20 @@ There are three tables in this project:
 ![questionpro - public](https://github.com/user-attachments/assets/f5150b97-78c8-49e6-bff1-b070d91adf2d)
 
 # API Design & Documentation
-There is only one API in the requirement: returns all the Employee Information under any given position. When client requests ```GET api/employee/:role_id```, the request goes to the nestJS backend server, the backend server then genrates a JWT secret with the role_id as payload and make a ```GET api/role``` request with ```Bearer Token``` and this request authorize the JWT token and returns the roles that are subordinates of the given role. 
+There is a single API requirement: to return all employee information under a specified position.
+
+When the client sends a request to GET api/employee/:role_id, the following flow occurs:
+
+1. The request hits the **NestJS backend server**.
+2. The backend generates a **JWT token**, embedding the ```role_id``` as the payload.
+3. It then makes an internal call to GET ```api/role```, attaching the generated token in the **Authorization header** as a Bearer token.
+4. The ```/api/role``` endpoint validates the JWT and returns the list of subordinate roles under the given ```role_id```.
+
+This flow is designed to simulate an **authorized request to a third-party API**, where authorization is handled via JWT.
 
 ![questionpro-api-design](https://github.com/user-attachments/assets/f11fc22d-8cc9-43cf-b383-eb228f6eed0e)
 
-Postman Documentation: https://fahimhasnat.postman.co/workspace/Fahim-Hasnat's-Workspace~4410836c-3590-44e6-8ccb-9631d42b546a/collection/45033274-678fff5a-671b-432f-8a8c-f6d4d6bb15c4?action=share&creator=45033274
+Postman Collection: https://fahimhasnat.postman.co/workspace/Fahim-Hasnat's-Workspace~4410836c-3590-44e6-8ccb-9631d42b546a/collection/45033274-678fff5a-671b-432f-8a8c-f6d4d6bb15c4?action=share&creator=45033274
 
 # Logging
 
@@ -176,7 +172,7 @@ Output:
 
 # Testing
 
-The project employs Jest for both unit and integration testing.
+The project uses Jest for both unit and integration testing. To run the test cases, ensure the server is running, then open a separate terminal and execute the following commands:
 
 ```bash
 # unit tests
